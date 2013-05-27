@@ -56,7 +56,7 @@ Vagrant.configure("2") do |config|
   ##############################
   config.vm.define :client do |client|
     client.vm.provider "virtualbox" do |v|
-      v.name = "Sede: cliente"
+      v.name = "Sede: Cliente"
       v.customize ["modifyvm", :id, "--nic2", "intnet", "--intnet2", "lan0", "--macaddress2", "080027FC3BCD"]
     end
 
@@ -76,7 +76,7 @@ Vagrant.configure("2") do |config|
   #########################################
   config.vm.define :client_f1 do |client_f1|
     client_f1.vm.provider "virtualbox" do |v|
-      v.name = "Filial 1: cliente"
+      v.name = "Filial 1: Cliente"
       v.customize ["modifyvm", :id, "--nic2", "intnet", "--intnet2", "lan1","--macaddress2", "0800276BE691"]
     end
 
@@ -86,6 +86,47 @@ Vagrant.configure("2") do |config|
 
     # Provision server
     client_f1.vm.provision :chef_solo do |chef|
+      chef.add_recipe "networking::client"
+      chef.add_recipe "tools"
+    end
+  end
+
+  #########################################
+  #### Config for VM: server (filial 2) ###
+  #########################################
+  config.vm.define :server2 do |server2|
+    server2.vm.provider "virtualbox" do |v|
+      v.name = "Filial 2: Servidor"
+      v.customize ["modifyvm", :id, "--nic2", "intnet", "--intnet2", "lan2"]
+    end
+
+    # Basic networking
+    server2.vm.hostname = "server2"
+    server2.vm.network :forwarded_port, guest: 22, host: 22020
+
+    # Provision server
+    server2.vm.provision :chef_solo do |chef|
+      chef.add_recipe "networking::server2"
+      chef.add_recipe "dhcp::server2"
+      chef.add_recipe "tools"
+    end
+  end
+
+  #########################################
+  #### Config for VM: client (filial 2) ###
+  #########################################
+  config.vm.define :client_f2 do |client_f2|
+    client_f2.vm.provider "virtualbox" do |v|
+      v.name = "Filial 2: Cliente"
+      v.customize ["modifyvm", :id, "--nic2", "intnet", "--intnet2", "lan2"]
+    end
+
+    # Basic networking
+    client_f2.vm.hostname = "filial2"
+    client_f2.vm.network :forwarded_port, guest: 22, host: 22021
+
+    # Provision server
+    client_f2.vm.provision :chef_solo do |chef|
       chef.add_recipe "networking::client"
       chef.add_recipe "tools"
     end

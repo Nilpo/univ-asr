@@ -4,19 +4,19 @@ package "dhcp"
 
 # Install dhcp configuration file
 cookbook_file "/etc/dhcp/dhcpd.conf" do
-  source "sede/dhcpd.conf"
+  source "filial2/dhcpd.conf"
 end
 
 # Define which interface to use for DHCP
 # http://www.linuxhomenetworking.com/wiki/index.php/Quick_HOWTO_:_Ch08_:_Configuring_the_DHCP_Server#Listening
 cookbook_file "/etc/sysconfig/dhcpd" do
-  source "sede/sysconfig"
+  source "filial2/sysconfig"
 end
 
 # Add route to reply to DHCP requests (multiple NICs)
 # http://www.linuxhomenetworking.com/wiki/index.php/Quick_HOWTO_:_Ch08_:_Configuring_the_DHCP_Server#DHCP_Servers_with_Multiple_NICs
 cookbook_file "/etc/sysconfig/network-scripts/route-eth1" do
-  source "sede/route"
+  source "filial2/route"
 end
 
 # Start service
