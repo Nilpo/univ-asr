@@ -13,9 +13,9 @@ Vagrant.configure("2") do |config|
   config.vm.define :router do |router|
     router.vm.provider "virtualbox" do |v|
       v.name = "Router"
-      v.customize ["modifyvm", :id, "--nic2", "intnet", "--intnet2", "lan0"]
-      v.customize ["modifyvm", :id, "--nic3", "intnet", "--intnet3", "lan1"]
-      v.customize ["modifyvm", :id, "--nic4", "intnet", "--intnet4", "lan2"]
+      v.customize ["modifyvm", :id, "--nic2", "intnet", "--intnet2", "sede"]
+      v.customize ["modifyvm", :id, "--nic3", "intnet", "--intnet3", "filial1"]
+      v.customize ["modifyvm", :id, "--nic4", "intnet", "--intnet4", "filial2"]
       v.customize ["modifyvm", :id, "--nic5", "intnet", "--intnet5", "dmz"]
     end
 
@@ -37,7 +37,7 @@ Vagrant.configure("2") do |config|
   config.vm.define :server do |server|
     server.vm.provider "virtualbox" do |v|
       v.name = "Sede: Servidor"
-      v.customize ["modifyvm", :id, "--nic2", "intnet", "--intnet2", "lan0"]
+      v.customize ["modifyvm", :id, "--nic2", "intnet", "--intnet2", "sede"]
     end
 
     # Basic networking
@@ -58,7 +58,7 @@ Vagrant.configure("2") do |config|
   config.vm.define :client do |client|
     client.vm.provider "virtualbox" do |v|
       v.name = "Sede: Cliente"
-      v.customize ["modifyvm", :id, "--nic2", "intnet", "--intnet2", "lan0"]
+      v.customize ["modifyvm", :id, "--nic2", "intnet", "--intnet2", "sede"]
     end
 
     # Basic networking
@@ -78,7 +78,7 @@ Vagrant.configure("2") do |config|
   config.vm.define :client_f1 do |client_f1|
     client_f1.vm.provider "virtualbox" do |v|
       v.name = "Filial 1: Cliente"
-      v.customize ["modifyvm", :id, "--nic2", "intnet", "--intnet2", "lan1"]
+      v.customize ["modifyvm", :id, "--nic2", "intnet", "--intnet2", "filial1"]
     end
 
     # Basic networking
@@ -98,7 +98,7 @@ Vagrant.configure("2") do |config|
   config.vm.define :server2 do |server2|
     server2.vm.provider "virtualbox" do |v|
       v.name = "Filial 2: Servidor"
-      v.customize ["modifyvm", :id, "--nic2", "intnet", "--intnet2", "lan2"]
+      v.customize ["modifyvm", :id, "--nic2", "intnet", "--intnet2", "filial2"]
     end
 
     # Basic networking
@@ -119,7 +119,7 @@ Vagrant.configure("2") do |config|
   config.vm.define :client_f2 do |client_f2|
     client_f2.vm.provider "virtualbox" do |v|
       v.name = "Filial 2: Cliente"
-      v.customize ["modifyvm", :id, "--nic2", "intnet", "--intnet2", "lan2"]
+      v.customize ["modifyvm", :id, "--nic2", "intnet", "--intnet2", "filial2"]
     end
 
     # Basic networking
