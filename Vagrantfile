@@ -21,7 +21,6 @@ Vagrant.configure("2") do |config|
 
     # Basic networking
     router.vm.hostname = "router"
-    router.vm.network :forwarded_port, guest: 22, host: 22022
 
     # Provision machine
     router.vm.provision :chef_solo do |chef|
@@ -42,7 +41,6 @@ Vagrant.configure("2") do |config|
 
     # Basic networking
     server.vm.hostname = "server"
-    server.vm.network :forwarded_port, guest: 22, host: 22000
 
     # Provision machine
     server.vm.provision :chef_solo do |chef|
@@ -63,7 +61,6 @@ Vagrant.configure("2") do |config|
 
     # Basic networking
     client.vm.hostname = "client"
-    client.vm.network :forwarded_port, guest: 22, host: 22001
 
     # Provision machine
     client.vm.provision :chef_solo do |chef|
@@ -83,7 +80,6 @@ Vagrant.configure("2") do |config|
 
     # Basic networking
     client_f1.vm.hostname = "filial1"
-    client_f1.vm.network :forwarded_port, guest: 22, host: 22011
 
     # Provision machine
     client_f1.vm.provision :chef_solo do |chef|
@@ -103,7 +99,6 @@ Vagrant.configure("2") do |config|
 
     # Basic networking
     server2.vm.hostname = "server2"
-    server2.vm.network :forwarded_port, guest: 22, host: 22020
 
     # Provision machine
     server2.vm.provision :chef_solo do |chef|
@@ -124,7 +119,6 @@ Vagrant.configure("2") do |config|
 
     # Basic networking
     client_f2.vm.hostname = "filial2"
-    client_f2.vm.network :forwarded_port, guest: 22, host: 22021
 
     # Provision machine
     client_f2.vm.provision :chef_solo do |chef|
@@ -144,7 +138,6 @@ Vagrant.configure("2") do |config|
 
     # Basic networking
     dmz.vm.hostname = "dmz"
-    dmz.vm.network :forwarded_port, guest: 22, host: 22030
 
     # Provision machine
     dmz.vm.provision :chef_solo do |chef|
