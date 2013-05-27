@@ -16,13 +16,14 @@ Vagrant.configure("2") do |config|
       v.customize ["modifyvm", :id, "--nic2", "intnet", "--intnet2", "lan0"]
       v.customize ["modifyvm", :id, "--nic3", "intnet", "--intnet3", "lan1"]
       v.customize ["modifyvm", :id, "--nic4", "intnet", "--intnet4", "lan2"]
+      v.customize ["modifyvm", :id, "--nic5", "intnet", "--intnet5", "dmz"]
     end
 
     # Basic networking
     router.vm.hostname = "router"
     router.vm.network :forwarded_port, guest: 22, host: 22022
 
-    # Provision router
+    # Provision machine
     router.vm.provision :chef_solo do |chef|
       chef.add_recipe "router"
       chef.add_recipe "dhcp::relay"
@@ -43,7 +44,7 @@ Vagrant.configure("2") do |config|
     server.vm.hostname = "server"
     server.vm.network :forwarded_port, guest: 22, host: 22000
 
-    # Provision server
+    # Provision machine
     server.vm.provision :chef_solo do |chef|
       chef.add_recipe "networking::server"
       chef.add_recipe "dhcp::server"
@@ -57,14 +58,14 @@ Vagrant.configure("2") do |config|
   config.vm.define :client do |client|
     client.vm.provider "virtualbox" do |v|
       v.name = "Sede: Cliente"
-      v.customize ["modifyvm", :id, "--nic2", "intnet", "--intnet2", "lan0", "--macaddress2", "080027FC3BCD"]
+      v.customize ["modifyvm", :id, "--nic2", "intnet", "--intnet2", "lan0"]
     end
 
     # Basic networking
     client.vm.hostname = "client"
     client.vm.network :forwarded_port, guest: 22, host: 22001
 
-    # Provision server
+    # Provision machine
     client.vm.provision :chef_solo do |chef|
       chef.add_recipe "networking::client"
       chef.add_recipe "tools"
@@ -77,14 +78,14 @@ Vagrant.configure("2") do |config|
   config.vm.define :client_f1 do |client_f1|
     client_f1.vm.provider "virtualbox" do |v|
       v.name = "Filial 1: Cliente"
-      v.customize ["modifyvm", :id, "--nic2", "intnet", "--intnet2", "lan1","--macaddress2", "0800276BE691"]
+      v.customize ["modifyvm", :id, "--nic2", "intnet", "--intnet2", "lan1"]
     end
 
     # Basic networking
     client_f1.vm.hostname = "filial1"
     client_f1.vm.network :forwarded_port, guest: 22, host: 22011
 
-    # Provision server
+    # Provision machine
     client_f1.vm.provision :chef_solo do |chef|
       chef.add_recipe "networking::client"
       chef.add_recipe "tools"
@@ -104,7 +105,7 @@ Vagrant.configure("2") do |config|
     server2.vm.hostname = "server2"
     server2.vm.network :forwarded_port, guest: 22, host: 22020
 
-    # Provision server
+    # Provision machine
     server2.vm.provision :chef_solo do |chef|
       chef.add_recipe "networking::server2"
       chef.add_recipe "dhcp::server2"
@@ -125,8 +126,28 @@ Vagrant.configure("2") do |config|
     client_f2.vm.hostname = "filial2"
     client_f2.vm.network :forwarded_port, guest: 22, host: 22021
 
-    # Provision server
+    # Provision machine
     client_f2.vm.provision :chef_solo do |chef|
+      chef.add_recipe "networking::client"
+      chef.add_recipe "tools"
+    end
+  end
+
+  ####################################
+  #### Config for VM: server (DMZ) ###
+  ####################################
+  config.vm.define :dmz do |dmz|
+    dmz.vm.provider "virtualbox" do |v|
+      v.name = "DMZ: Servidor"
+      v.customize ["modifyvm", :id, "--nic2", "intnet", "--intnet2", "dmz", "--macaddress2", "080027FC3BCE"]
+    end
+
+    # Basic networking
+    dmz.vm.hostname = "dmz"
+    dmz.vm.network :forwarded_port, guest: 22, host: 22030
+
+    # Provision machine
+    dmz.vm.provision :chef_solo do |chef|
       chef.add_recipe "networking::client"
       chef.add_recipe "tools"
     end

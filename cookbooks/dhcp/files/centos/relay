@@ -1,6 +1,9 @@
 # Command line options here
 DHCRELAYARGS=""
-# DHCPv4 only
-INTERFACES="eth1 eth2"
-# DHCPv4 only
+
+# Interfaces for each network the relay
+# takes part in (lan0, lan1 and dmz)
+INTERFACES="eth1 eth2 eth4"
+
+# DHCP server in `sede` network
 DHCPSERVERS="172.16.0.1"
