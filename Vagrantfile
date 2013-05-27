@@ -7,42 +7,87 @@ Vagrant.configure("2") do |config|
   config.vm.box = "centos"
   config.vm.box_url = "http://developer.nrel.gov/downloads/vagrant-boxes/CentOS-6.4-i386-v20130427.box"
 
-  # Config for VM: server
-  config.vm.define :server do |server|
+  ##############################
+  #### Config for VM: router ###
+  ##############################
+  config.vm.define :router do |router|
+    router.vm.provider "virtualbox" do |v|
+      v.name = "Router"
+      v.customize ["modifyvm", :id, "--nic2", "intnet", "--intnet2", "lan0"]
+      v.customize ["modifyvm", :id, "--nic3", "intnet", "--intnet3", "lan1"]
+      v.customize ["modifyvm", :id, "--nic4", "intnet", "--intnet4", "lan2"]
+    end
 
-    # Set virtualbox to use an internal network
-    # (second NIC created by the client.vm.network :private_network below)
+    # Basic networking
+    router.vm.hostname = "router"
+    router.vm.network :forwarded_port, guest: 22, host: 22022
+
+    # Provision router
+    router.vm.provision :chef_solo do |chef|
+      chef.add_recipe "router"
+      chef.add_recipe "dhcp::relay"
+      chef.add_recipe "tools"
+    end
+  end
+
+  ##############################
+  #### Config for VM: server ###
+  ##############################
+  config.vm.define :server do |server|
     server.vm.provider "virtualbox" do |v|
       v.name = "Sede: Servidor"
-      v.customize ["modifyvm", :id, "--nic2", "intnet"]
+      v.customize ["modifyvm", :id, "--nic2", "intnet", "--intnet2", "lan0"]
     end
 
     # Basic networking
     server.vm.hostname = "server"
-    server.vm.network :private_network, ip: "172.16.0.1"
+    server.vm.network :forwarded_port, guest: 22, host: 22000
 
     # Provision server
     server.vm.provision :chef_solo do |chef|
-      chef.add_recipe "vim"
-      chef.add_recipe "dhcp"
+      chef.add_recipe "networking::server"
+      chef.add_recipe "dhcp::server"
+      chef.add_recipe "tools"
     end
   end
 
-  # Config for VM: client
+  ##############################
+  #### Config for VM: client ###
+  ##############################
   config.vm.define :client do |client|
-    # Use Ubuntu Precise for the client
-    client.vm.box = "precise32"
-    config.vm.box_url = "http://files.vagrantup.com/precise32.box"
-
-    # Set virtualbox to use an internal network
-    # (second NIC created by the client.vm.network :private_network below)
     client.vm.provider "virtualbox" do |v|
       v.name = "Sede: cliente"
-      v.customize ["modifyvm", :id, "--nic2", "intnet"]
+      v.customize ["modifyvm", :id, "--nic2", "intnet", "--intnet2", "lan0", "--macaddress2", "080027FC3BCD"]
     end
 
-    # Basic netorking
+    # Basic networking
     client.vm.hostname = "client"
-    client.vm.network :private_network, type: :dhcp
+    client.vm.network :forwarded_port, guest: 22, host: 22001
+
+    # Provision server
+    client.vm.provision :chef_solo do |chef|
+      chef.add_recipe "networking::client"
+      chef.add_recipe "tools"
+    end
+  end
+
+  #########################################
+  #### Config for VM: client (filial 1) ###
+  #########################################
+  config.vm.define :client_f1 do |client_f1|
+    client_f1.vm.provider "virtualbox" do |v|
+      v.name = "Filial 1: cliente"
+      v.customize ["modifyvm", :id, "--nic2", "intnet", "--intnet2", "lan1","--macaddress2", "0800276BE691"]
+    end
+
+    # Basic networking
+    client_f1.vm.hostname = "filial1"
+    client_f1.vm.network :forwarded_port, guest: 22, host: 22011
+
+    # Provision server
+    client_f1.vm.provision :chef_solo do |chef|
+      chef.add_recipe "networking::client"
+      chef.add_recipe "tools"
+    end
   end
 end
