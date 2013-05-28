@@ -10,21 +10,21 @@ bash "forwarding" do
   EOH
 end
 
-# Network lan0
+# Network sede
 ifconfig "172.16.0.254" do
   mask "255.255.255.0"
   device "eth1"
   onboot "yes"
 end
 
-# Network lan1
+# Network filial1
 ifconfig "172.16.1.254" do
   mask "255.255.255.0"
   device "eth2"
   onboot "yes"
 end
 
-# Network lan2
+# Network filial2
 ifconfig "172.16.2.254" do
   mask "255.255.255.0"
   device "eth3"

@@ -2,7 +2,7 @@
 DHCRELAYARGS=""
 
 # Interfaces for each network the relay
-# takes part in (lan0, lan1 and dmz)
+# takes part in (sede, filial1 and dmz)
 INTERFACES="eth1 eth2 eth4"
 
 # DHCP server in `sede` network
