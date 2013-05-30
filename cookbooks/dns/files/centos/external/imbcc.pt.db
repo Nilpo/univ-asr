@@ -7,17 +7,12 @@ $TTL 86400
                     86400 ) ; minimum
 
     IN  NS  ns1.imbcc.pt.
+    IN  A   172.31.0.1
 
-    IN  TXT "Construção Civil - ImbCC, SA"
+    IN  TXT "Construcao Civil - ImbCC, SA"
     IN  HINFO   "Pentium" "CentOS Linux"
 
-; Redes
-net-DMZ       IN  A   172.31.0.0
-
-; Servidores da DMZ
 ns1     IN  A       172.31.0.1
+www     IN  A       172.31.0.1
+imob    IN  A       172.31.0.1
 dns     IN  CNAME   ns1
-www     IN  CNAME   ns1
-imob    IN  CNAME   ns1
-
-$GENERATE 5-20 serv$ A 172.31.0.$

@@ -7,10 +7,8 @@ $TTL 86400
 					86400 )	; minimum
     IN  NS  ns1.imbcc.pt.
 
-    IN  TXT "Construção Civil - ImbCC, SA"
+    IN  TXT "Construcao Civil - ImbCC, SA"
     IN  HINFO   "Pentium" "CentOS Linux"
 
 ; Servidores internos
 1	IN	PTR	ns1.imbcc.pt.
-
-$GENERATE 5-20 $ PTR serv$.imbcc.pt.

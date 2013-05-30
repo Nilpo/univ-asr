@@ -7,7 +7,7 @@ $TTL 86400
 					86400 )	; minimum
     IN  NS  ns1.imbcc.pt.
 
-    IN  TXT "Construção Civil - ImbCC, SA"
+    IN  TXT "Construcao Civil - ImbCC, SA"
     IN  HINFO   "Pentium" "CentOS Linux"
 
 $GENERATE 60-99 $ PTR dhcp1$.imbcc.pt.
