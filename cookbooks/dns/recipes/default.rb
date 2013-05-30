@@ -52,21 +52,31 @@ bash "external" do
     REV=`echo $PUBLIC_NET | awk -F. '{s="";for (i=NF;i>1;i--) s=s sprintf("%s.",$i);$0=s $1}1'`
 
     # Update named.conf and zone files
-    sed -i~ "s/\\(listen-on port 53\\).*/\\1   { $PUBLIC_IP; 172.31.0.1; 127.0.0.1; };/1g; /DYNAMIC/ { s/0.31.172/$REV/}" /etc/named.conf
+    sed -i~ "s/\\(listen-on port 53\\).*/\\1   { $PUBLIC_IP; 172.31.0.1; 127.0.0.1; };/1g; /DYNAMIC/ { s/0.31.172/$REV/}; s/ \\/\\/ DYNAMIC//" /etc/named.conf
     sed -i~ "s/172.31.0.1/$PUBLIC_IP/" /var/named/external/imbcc.pt.db
     sed -i~ "s/^1\\(.*PTR.*\\)/$HOST_PART\\1/g" /var/named/external/0.31.172.rev
     mv /var/named/external/0.31.172.rev /var/named/external/$REV.rev
   EOH
 end
 
+# Start DNS service
 service "named" do
   supports :reload => true, :status => true
-  action [ :enable, :start ]
+  action [:enable, :start]
 end
 
+# Allow DNS requests through the firewall
 bash "security" do
   user "root"
   code <<-EOH
     iptables -I INPUT -p udp --dport 53 -j ACCEPT
   EOH
+end
+
+# Change the server's nameserver
+include_recipe "networking::resolv"
+
+# Restart network
+service "network" do
+  action [:restart]
 end

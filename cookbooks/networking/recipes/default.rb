@@ -25,7 +25,9 @@ if node.static.ip
   end
 
   # Configure nameservers
-  include_recipe "networking::resolv"
+  if node.static.resolv == "search"
+    include_recipe "networking::resolv"
+  end
 
 else
   # Configure dhcp

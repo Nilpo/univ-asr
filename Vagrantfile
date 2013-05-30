@@ -29,7 +29,6 @@ Vagrant.configure("2") do |config|
           "ip" => "172.31.0.1",
           "route" => "172.16.0.0/16 via 172.31.0.254",
           "resolv" => "domain",
-          "nameservers" => ["172.31.0.1", "8.8.8.8"],
           "no_peerdns" => ["eth0", "eth2"],
         }
       }
