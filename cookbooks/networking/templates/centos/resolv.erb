@@ -1,0 +1,4 @@
+<%= node.static.resolv %> <%= node.static.domain %>
+<% @node.static.nameservers.each do |ns| -%>
+nameserver <%= ns %>
+<% end %>

@@ -1,0 +1,23 @@
+$TTL 86400
+@   IN SOA  ns1.imbcc.pt. root.imbcc.pt. (
+                    2013052800  ; serial
+                    28800   ; refresh
+                    24400   ; retry
+                    3600000 ; expire
+                    86400 ) ; minimum
+
+    IN  NS  ns1.imbcc.pt.
+
+    IN  TXT "Construção Civil - ImbCC, SA"
+    IN  HINFO   "Pentium" "CentOS Linux"
+
+; Redes
+net-DMZ       IN  A   172.31.0.0
+
+; Servidores da DMZ
+ns1     IN  A       172.31.0.1
+dns     IN  CNAME   ns1
+www     IN  CNAME   ns1
+imob    IN  CNAME   ns1
+
+$GENERATE 5-20 serv$ A 172.31.0.$

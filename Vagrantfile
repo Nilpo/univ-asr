@@ -7,6 +7,37 @@ Vagrant.configure("2") do |config|
   config.vm.box = "centos"
   config.vm.box_url = "http://developer.nrel.gov/downloads/vagrant-boxes/CentOS-6.4-i386-v20130427.box"
 
+  ####################################
+  #### Config for VM: server (DMZ) ###
+  ####################################
+  config.vm.define :dmz do |dmz|
+    dmz.vm.provider "virtualbox" do |v|
+      v.name = "DMZ: Servidor"
+      v.customize ["modifyvm", :id, "--nic2", "intnet", "--intnet2", "dmz", "--macaddress2", "080027FC3BCE"]
+    end
+
+    # Basic networking
+    dmz.vm.hostname = "dmz"
+
+    # Public access (Internet)
+    dmz.vm.network :public_network, adapter: 3
+
+    # Provision machine
+    dmz.vm.provision :chef_solo do |chef|
+      chef.json = {
+        "static" => {
+          "ip" => "172.31.0.1",
+          "route" => "172.16.0.0/16 via 172.31.0.254",
+          "resolv" => "domain",
+          "no_peerdns" => ["eth0", "eth2"],
+        }
+      }
+      chef.add_recipe "networking"
+      chef.add_recipe "dns"
+      chef.add_recipe "tools"
+    end
+  end
+
   ##############################
   #### Config for VM: router ###
   ##############################
@@ -25,6 +56,7 @@ Vagrant.configure("2") do |config|
     # Provision machine
     router.vm.provision :chef_solo do |chef|
       chef.add_recipe "router"
+      chef.add_recipe "networking::resolv"
       chef.add_recipe "dhcp::relay"
       chef.add_recipe "tools"
     end
@@ -44,8 +76,14 @@ Vagrant.configure("2") do |config|
 
     # Provision machine
     server.vm.provision :chef_solo do |chef|
-      chef.add_recipe "networking::server"
-      chef.add_recipe "dhcp::server"
+      chef.json = {
+        "static" => {
+          "ip" => "172.16.0.1",
+          "gateway" => "172.16.0.254",
+        }
+      }
+      chef.add_recipe "networking"
+      chef.add_recipe "dhcp"
       chef.add_recipe "tools"
     end
   end
@@ -64,7 +102,7 @@ Vagrant.configure("2") do |config|
 
     # Provision machine
     client.vm.provision :chef_solo do |chef|
-      chef.add_recipe "networking::client"
+      chef.add_recipe "networking"
       chef.add_recipe "tools"
     end
   end
@@ -83,7 +121,7 @@ Vagrant.configure("2") do |config|
 
     # Provision machine
     client_f1.vm.provision :chef_solo do |chef|
-      chef.add_recipe "networking::client"
+      chef.add_recipe "networking"
       chef.add_recipe "tools"
     end
   end
@@ -102,8 +140,15 @@ Vagrant.configure("2") do |config|
 
     # Provision machine
     server2.vm.provision :chef_solo do |chef|
-      chef.add_recipe "networking::server2"
-      chef.add_recipe "dhcp::server2"
+      chef.json = {
+        "static" => {
+          "ip" => "172.16.2.1",
+          "gateway" => "172.16.2.254",
+          "domain" => "imob.imbcc.pt",
+        }
+      }
+      chef.add_recipe "networking"
+      chef.add_recipe "dhcp"
       chef.add_recipe "tools"
     end
   end
@@ -122,26 +167,7 @@ Vagrant.configure("2") do |config|
 
     # Provision machine
     client_f2.vm.provision :chef_solo do |chef|
-      chef.add_recipe "networking::client"
-      chef.add_recipe "tools"
-    end
-  end
-
-  ####################################
-  #### Config for VM: server (DMZ) ###
-  ####################################
-  config.vm.define :dmz do |dmz|
-    dmz.vm.provider "virtualbox" do |v|
-      v.name = "DMZ: Servidor"
-      v.customize ["modifyvm", :id, "--nic2", "intnet", "--intnet2", "dmz", "--macaddress2", "080027FC3BCE"]
-    end
-
-    # Basic networking
-    dmz.vm.hostname = "dmz"
-
-    # Provision machine
-    dmz.vm.provision :chef_solo do |chef|
-      chef.add_recipe "networking::client"
+      chef.add_recipe "networking"
       chef.add_recipe "tools"
     end
   end

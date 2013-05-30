@@ -32,7 +32,7 @@ ifconfig "172.16.2.254" do
 end
 
 # Network dmz
-ifconfig "172.16.10.254" do
+ifconfig "172.31.0.254" do
   mask "255.255.255.0"
   device "eth4"
   onboot "yes"
