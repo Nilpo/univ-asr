@@ -22,6 +22,9 @@ Vagrant.configure("2") do |config|
     # Public access (Internet)
     dmz.vm.network :public_network, adapter: 3
 
+    # Allow HTTP access through NAT (to not depend on DNS being set while developing)
+    dmz.vm.network :forwarded_port, guest: 80, host: 8080
+
     # Provision machine
     dmz.vm.provision :chef_solo do |chef|
       chef.json = {
@@ -34,6 +37,7 @@ Vagrant.configure("2") do |config|
       }
       chef.add_recipe "networking"
       chef.add_recipe "dns"
+      chef.add_recipe "http"
       chef.add_recipe "tools"
     end
   end
