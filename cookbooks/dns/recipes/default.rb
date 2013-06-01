@@ -11,7 +11,6 @@ end
     group "named"
     mode 0770
     recursive true
-    notifies :restart, "service[named]", :delayed
   end
 end
 
@@ -20,7 +19,6 @@ cookbook_file "/etc/named.conf" do
   source "named.conf"
   group "named"
   mode 0644
-  notifies :restart, "service[named]", :delayed
 end
 
 # Copy internal zone files
@@ -30,7 +28,6 @@ end
     owner "named"
     group "named"
     mode 0644
-    notifies :restart, "service[named]", :delayed
   end
 end
 
@@ -41,7 +38,6 @@ end
     owner "named"
     group "named"
     mode 0644
-    notifies :restart, "service[named]", :delayed
   end
 end
 
@@ -61,19 +57,13 @@ bash "external" do
     sed -i~ "s/^1\\(.*PTR.*\\)/$HOST_PART\\1/g" /var/named/external/0.31.172.rev
     mv /var/named/external/0.31.172.rev /var/named/external/$REV.rev
   EOH
-  notifies :restart, "service[named]", :delayed
 end
 
 # Start DNS service
 service "named" do
-  supports :reload => true, :status => true
-  action [:enable, :start]
+  action [:enable, :restart]
 end
 
 # Change the server's nameserver
 include_recipe "networking::resolv"
-
-# Restart network
-service "network" do
-  action [:restart]
-end
+include_recipe "networking::restart"

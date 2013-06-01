@@ -41,6 +41,4 @@ else
 end
 
 # Restart service
-service "network" do
-  action [:restart]
-end
+include_recipe "networking::restart"

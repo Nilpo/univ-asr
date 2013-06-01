@@ -17,8 +17,7 @@ end
 
 # Start service
 service "httpd" do
-  supports :reload => true, :status => true
-  action [:enable, :start]
+  action [:enable, :restart]
 end
 
 # Create users with userdir access

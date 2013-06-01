@@ -63,6 +63,7 @@ Vagrant.configure("2") do |config|
     router.vm.provision :chef_solo do |chef|
       chef.add_recipe "router"
       chef.add_recipe "networking::resolv"
+      chef.add_recipe "networking::restart"
       chef.add_recipe "dhcp::relay"
       chef.add_recipe "ssh"
       chef.add_recipe "tools"
