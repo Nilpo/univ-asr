@@ -38,6 +38,7 @@ Vagrant.configure("2") do |config|
       chef.add_recipe "networking"
       chef.add_recipe "dns"
       chef.add_recipe "http"
+      chef.add_recipe "ssh"
       chef.add_recipe "tools"
     end
   end
@@ -62,6 +63,7 @@ Vagrant.configure("2") do |config|
       chef.add_recipe "router"
       chef.add_recipe "networking::resolv"
       chef.add_recipe "dhcp::relay"
+      chef.add_recipe "ssh"
       chef.add_recipe "tools"
     end
   end
@@ -88,6 +90,7 @@ Vagrant.configure("2") do |config|
       }
       chef.add_recipe "networking"
       chef.add_recipe "dhcp"
+      chef.add_recipe "ssh"
       chef.add_recipe "tools"
     end
   end
@@ -107,6 +110,7 @@ Vagrant.configure("2") do |config|
     # Provision machine
     client.vm.provision :chef_solo do |chef|
       chef.add_recipe "networking"
+      chef.add_recipe "ssh"
       chef.add_recipe "tools"
     end
   end
@@ -126,6 +130,7 @@ Vagrant.configure("2") do |config|
     # Provision machine
     client_f1.vm.provision :chef_solo do |chef|
       chef.add_recipe "networking"
+      chef.add_recipe "ssh"
       chef.add_recipe "tools"
     end
   end
@@ -153,6 +158,7 @@ Vagrant.configure("2") do |config|
       }
       chef.add_recipe "networking"
       chef.add_recipe "dhcp"
+      chef.add_recipe "ssh"
       chef.add_recipe "tools"
     end
   end
@@ -172,6 +178,7 @@ Vagrant.configure("2") do |config|
     # Provision machine
     client_f2.vm.provision :chef_solo do |chef|
       chef.add_recipe "networking"
+      chef.add_recipe "ssh"
       chef.add_recipe "tools"
     end
   end
