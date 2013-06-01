@@ -21,14 +21,6 @@ service "httpd" do
   action [:enable, :start]
 end
 
-# Allow HTTP requests through the firewall
-bash "security" do
-  user "root"
-  code <<-EOH
-    iptables -I INPUT -p tcp --dport 80 -j ACCEPT
-  EOH
-end
-
 # Create users with userdir access
 %w{rui nelia paulo}.each do |username|
   user "#{username}"

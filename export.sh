@@ -80,37 +80,46 @@ vm_cp dmz dmz/ \
         "/etc/passwd" \
         "/home/{rui,nelia,paulo}/public_html" \
         "/etc/ssh/{sshd_config,banner.txt}" \
+        "/etc/sysconfig/iptables" \
 
 vm_cp router "" \
         "/etc/sysconfig/network-scripts/ifcfg-eth*" \
+        "/etc/sysconfig/network" \
         "/etc/sysconfig/dhcrelay" \
         "/etc/ssh/{sshd_config,banner.txt}" \
+        "/etc/sysconfig/iptables" \
+        "/etc/sysctl.conf" \
 
 vm_cp server sede/ \
         "/etc/sysconfig/network-scripts/{ifcfg,route}-eth1" \
         "/etc/sysconfig/{network,dhcpd}" \
         "/etc/dhcp/dhcpd.conf" \
         "/etc/ssh/{sshd_config,banner.txt}" \
+        "/etc/sysconfig/iptables" \
 
 vm_cp client sede/ \
         "/etc/sysconfig/network-scripts/ifcfg-eth1" \
         "/etc/sysconfig/network" \
         "/etc/ssh/{sshd_config,banner.txt}" \
+        "/etc/sysconfig/iptables" \
 
 vm_cp client_f1 filial1/ \
         "/etc/sysconfig/network-scripts/ifcfg-eth1" \
         "/etc/sysconfig/network" \
         "/etc/ssh/{sshd_config,banner.txt}" \
+        "/etc/sysconfig/iptables" \
 
 vm_cp server2 filial2/ \
         "/etc/sysconfig/network-scripts/{ifcfg,route}-eth1" \
         "/etc/sysconfig/{network,dhcpd}" \
         "/etc/dhcp/dhcpd.conf" \
         "/etc/ssh/{sshd_config,banner.txt}" \
+        "/etc/sysconfig/iptables" \
 
 vm_cp client_f2 filial2/ \
         "/etc/sysconfig/network-scripts/ifcfg-eth1" \
         "/etc/sysconfig/network" \
         "/etc/ssh/{sshd_config,banner.txt}" \
+        "/etc/sysconfig/iptables" \
 
 echo "Done!"

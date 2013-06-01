@@ -35,6 +35,7 @@ Vagrant.configure("2") do |config|
           "no_peerdns" => ["eth0", "eth2"],
         }
       }
+      chef.add_recipe "iptables"
       chef.add_recipe "networking"
       chef.add_recipe "dns"
       chef.add_recipe "http"

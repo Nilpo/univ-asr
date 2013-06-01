@@ -70,14 +70,6 @@ service "named" do
   action [:enable, :start]
 end
 
-# Allow DNS requests through the firewall
-bash "security" do
-  user "root"
-  code <<-EOH
-    iptables -I INPUT -p udp --dport 53 -j ACCEPT
-  EOH
-end
-
 # Change the server's nameserver
 include_recipe "networking::resolv"
 
