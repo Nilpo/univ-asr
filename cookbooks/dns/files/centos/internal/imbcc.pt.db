@@ -7,6 +7,7 @@ $TTL 86400
                     86400 ) ; minimum
 
     IN  NS  ns1.imbcc.pt.
+    IN  A   172.31.0.1
 
     IN  TXT "Construcao Civil - ImbCC, SA"
     IN  HINFO   "Pentium" "CentOS Linux"
