@@ -72,7 +72,7 @@ function vm_cp {
 
 vm_cp dmz dmz/ \
         "/etc/sysconfig/network-scripts/{ifcfg,route}-eth{1,2}" \
-        "/etc/sysconfig/network" \
+        "/etc/sysconfig/{network,iptables}" \
         "/etc/{named,resolv}.conf*" \
         "/var/named/{internal,external}" \
         "/etc/httpd/conf/httpd.conf" \
@@ -80,7 +80,6 @@ vm_cp dmz dmz/ \
         "/etc/passwd" \
         "/home/{rui,nelia,paulo}/public_html" \
         "/etc/ssh/{sshd_config,banner.txt}" \
-        "/etc/sysconfig/iptables" \
 
 vm_cp router "" \
         "/etc/sysconfig/network-scripts/ifcfg-eth*" \

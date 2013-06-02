@@ -4,6 +4,12 @@
   package bind_pkg
 end
 
+# Clean backups from last run (if available)
+execute "clean" do
+  user "root"
+  command "rm -f /etc/named.conf~ /var/named/external/*{~,rev}"
+end
+
 # Create /var/named subdirectories
 %w{data internal external}.each do |subdir|
   directory "/var/named/#{subdir}" do
@@ -41,22 +47,17 @@ end
   end
 end
 
-# Listen on our public IP for external requests
-bash "external" do
-  user "root"
-  code <<-EOH
-    # IP manipulation
-    PUBLIC_IP=`ifconfig eth2 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1 }'`
-    PUBLIC_NET=`echo $PUBLIC_IP | cut -d. -f1-3`
-    HOST_PART=`echo $PUBLIC_IP | cut -d. -f4`
-    REV=`echo $PUBLIC_NET | awk -F. '{s="";for (i=NF;i>1;i--) s=s sprintf("%s.",$i);$0=s $1}1'`
+# Copy script to update DNS with public address
+cookbook_file "/root/dns-external.sh" do
+  source "dns-external.sh"
+  owner "root"
+  group "root"
+  mode 0770
+end
 
-    # Update named.conf and zone files
-    sed -i~ "s/\\(listen-on port 53\\).*/\\1   { $PUBLIC_IP; 172.31.0.1; 127.0.0.1; };/1g; /DYNAMIC/ { s/0.31.172/$REV/}; s/ \\/\\/ DYNAMIC//" /etc/named.conf
-    sed -i~ "s/172.31.0.1/$PUBLIC_IP/" /var/named/external/imbcc.pt.db
-    sed -i~ "s/^1\\(.*PTR.*\\)/$HOST_PART\\1/g" /var/named/external/0.31.172.rev
-    mv /var/named/external/0.31.172.rev /var/named/external/$REV.rev
-  EOH
+# Listen on our public IP for external requests
+execute "/root/dns-external.sh" do
+  user "root"
 end
 
 # Start DNS service
