@@ -12,7 +12,9 @@ $TTL 86400
     IN  TXT "Construcao Civil - ImbCC, SA"
     IN  HINFO   "Pentium" "CentOS Linux"
 
-ns1     IN  A       172.31.0.1
-www     IN  A       172.31.0.1
-imob    IN  A       172.31.0.1
-dns     IN  CNAME   ns1
+ns1         IN  A       172.31.0.1
+www         IN  A       172.31.0.1
+imob        IN  A       172.31.0.1
+clientes    IN  A       172.31.0.1
+ftp         IN  A       172.31.0.1
+dns         IN  CNAME   ns1

@@ -76,6 +76,8 @@ vm_cp dmz dmz/ \
         "/etc/{named,resolv}.conf*" \
         "/var/named/{internal,external}" \
         "/etc/httpd/conf/httpd.conf" \
+        "/etc/httpd/conf.d/ssl.conf" \
+        "/etc/httpd/ssl" \
         "/var/www/imbcc" \
         "/etc/passwd" \
         "/home/{rui,nelia,paulo}/public_html" \

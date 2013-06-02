@@ -8,6 +8,7 @@
 
 # HTTP Service
 -A INPUT -p tcp --dport 80  -j ACCEPT
+-A INPUT -p tcp --dport 443 -j ACCEPT
 
 # Default rules
 -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
