@@ -27,10 +27,12 @@ www         IN  CNAME   serv1
 imob        IN  CNAME   serv1
 clientes    IN  CNAME   serv1
 ftp         IN  CNAME   serv1
+cloud       IN  CNAME   serv1
 
 ; Servidores internos
 server      IN  A       172.16.0.1
 dhcp        IN  CNAME   server
+ldap        IN  CNAME   server
 
 server.imob IN  A       172.16.2.1
 dhcp.imob   IN  CNAME   server.imob

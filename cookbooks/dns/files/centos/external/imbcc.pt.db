@@ -17,4 +17,5 @@ www         IN  A       172.31.0.1
 imob        IN  A       172.31.0.1
 clientes    IN  A       172.31.0.1
 ftp         IN  A       172.31.0.1
+cloud       IN  A       172.31.0.1
 dns         IN  CNAME   ns1
