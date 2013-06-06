@@ -21,13 +21,15 @@ execute "epel" do
   cwd "/root"
   command "rpm -ivh epel-release-6-8.noarch.rpm"
   action :nothing
+  notifies :run, "bash[owncloud]", :immediately
 end
 
 # Install owncloud using EPEL for dependencies
-yum_package "owncloud" do
-  flush_cache [:before]
-  options "--enablerepo=epel"
+bash "owncloud" do
+  user "root"
+  code <<-EOF
+  yum install -y owncloud --enablerepo=epel
+  yum install -y php-ldap
+  EOF
+  action :nothing
 end
-
-# Add support for LDAP
-package "php-ldap"
