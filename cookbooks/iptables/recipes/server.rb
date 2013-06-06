@@ -1,7 +1,7 @@
 
 # Copy iptables rules file
 cookbook_file "/etc/sysconfig/iptables" do
-  source "dmz"
+  source "server"
 end
 
 # Restart service

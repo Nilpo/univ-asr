@@ -27,19 +27,19 @@ end
   end
 end
 
-# Copy certificates
-%w{server.crt ca.crt}.each do |cert|
-  cookbook_file "/etc/httpd/ssl/certs/#{cert}" do
-    source "pki/certs/#{cert}"
-  end
+# Copy CA certificate
+cookbook_file "/etc/httpd/ssl/certs/ca.crt" do
+  source "pki/certs/ca.crt"
 end
 
-# Copy private key
-cookbook_file "/etc/httpd/ssl/keys/server.pem" do
-  source "pki/keys/server.pem"
-  # owner "root"
-  # group "root"
-  # mode 0700
+# Copy server certificates and keys
+%w{clientes cloud}.each do |server|
+  cookbook_file "/etc/httpd/ssl/certs/#{server}.crt" do
+    source "pki/certs/#{server}.crt"
+  end
+  cookbook_file "/etc/httpd/ssl/keys/#{server}.pem" do
+    source "pki/keys/#{server}.pem"
+  end
 end
 
 # Start service

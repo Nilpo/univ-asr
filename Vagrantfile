@@ -38,6 +38,7 @@ Vagrant.configure("2") do |config|
       chef.add_recipe "iptables"
       chef.add_recipe "networking"
       chef.add_recipe "dns"
+      chef.add_recipe "owncloud"
       chef.add_recipe "http"
       chef.add_recipe "ssh"
       chef.add_recipe "tools"
@@ -88,11 +89,16 @@ Vagrant.configure("2") do |config|
         "static" => {
           "ip" => "172.16.0.1",
           "gateway" => "172.16.0.254",
+        },
+        "openldap" => {
+          "domain" => "imbcc.pt"
         }
       }
       chef.add_recipe "networking"
       chef.add_recipe "dhcp"
       chef.add_recipe "ssh"
+      chef.add_recipe "iptables::server"
+      chef.add_recipe "ldap"
       chef.add_recipe "tools"
     end
   end

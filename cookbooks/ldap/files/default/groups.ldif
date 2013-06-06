@@ -1,0 +1,3 @@
+dn: ou=groups,dc=imbcc,dc=pt
+objectClass: organizationalUnit
+ou: groups

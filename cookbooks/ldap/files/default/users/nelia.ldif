@@ -1,0 +1,7 @@
+dn: uid=nelia,ou=users,dc=imbcc,dc=pt
+cn: Nélia Furtado
+cn: Nelia Furtado
+sn: Furtado
+objectClass: inetOrgPerson
+userPassword: nelia
+uid: nelia

@@ -1,0 +1,6 @@
+dn: uid=rui,ou=users,dc=imbcc,dc=pt
+cn: Rui Pacheco
+sn: Pacheco
+objectClass: inetOrgPerson
+userPassword: rui
+uid: rui

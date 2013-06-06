@@ -1,0 +1,6 @@
+dn: uid=psantos,ou=users,dc=imbcc,dc=pt
+cn: Paulo Santos
+sn: Santos
+objectClass: inetOrgPerson
+userPassword: psantos
+uid: psantos

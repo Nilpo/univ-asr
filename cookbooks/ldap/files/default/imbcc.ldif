@@ -1,0 +1,5 @@
+dn: dc=imbcc,dc=pt
+objectClass: dcObject
+objectClass: organization
+dc: imbcc
+o : Imobiliária e Construção Civil - ImbCC, SA

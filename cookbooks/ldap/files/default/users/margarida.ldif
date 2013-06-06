@@ -1,0 +1,6 @@
+dn: uid=margarida,ou=users,dc=imbcc,dc=pt
+cn: Margarida Altas
+sn: Altas
+objectClass: inetOrgPerson
+userPassword: margarida
+uid: margarida

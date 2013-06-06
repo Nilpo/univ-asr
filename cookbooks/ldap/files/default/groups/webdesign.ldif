@@ -1,0 +1,6 @@
+dn: cn=webdesign,ou=groups,dc=imbcc,dc=pt
+cn: webdesign
+description: Web Designers
+objectClass: groupOfNames
+member: uid=paulo,ou=users,dc=imbcc,dc=pt
+member: uid=margarida,ou=users,dc=imbcc,dc=pt

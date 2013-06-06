@@ -97,6 +97,7 @@ vm_cp server sede/ \
         "/etc/dhcp/dhcpd.conf" \
         "/etc/ssh/{sshd_config,banner.txt}" \
         "/etc/sysconfig/iptables" \
+        "/etc/openldap/slapd.d/cn\=config/olcDatabase\={\{2\}bdb,\{1\}monitor}.ldif" \
 
 vm_cp client sede/ \
         "/etc/sysconfig/network-scripts/ifcfg-eth1" \

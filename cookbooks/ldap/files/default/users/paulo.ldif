@@ -1,0 +1,6 @@
+dn: uid=paulo,ou=users,dc=imbcc,dc=pt
+cn: Paulo Torres
+sn: Torres
+objectClass: inetOrgPerson
+userPassword: paulo
+uid: paulo
