@@ -10,6 +10,14 @@
 -A INPUT -p tcp --dport 80  -j ACCEPT
 -A INPUT -p tcp --dport 443 -j ACCEPT
 
+# FTP Service
+-A INPUT -p tcp --sport 1024:65535 --dport 21 -m state --state NEW,ESTABLISHED -j ACCEPT
+-A OUTPUT -p tcp --sport 21 --dport 1024:65535 -m state --state ESTABLISHED -j ACCEPT
+-A INPUT -p tcp --sport 1024:65535 --dport 1024:65535 -m state --state ESTABLISHED,RELATED -j ACCEPT
+-A OUTPUT -p tcp --sport 1024:65535 -d 0/0 --dport 1024:65535 -m state --state ESTABLISHED -j ACCEPT
+-A OUTPUT -p tcp --sport 20 --dport 1024:65535 -m state --state ESTABLISHED,RELATED -j ACCEPT
+-A INPUT -p tcp --sport 1024:65535 --dport 20 -m state --state ESTABLISHED -j ACCEPT
+
 # Default rules
 -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
 -A INPUT -p icmp -j ACCEPT

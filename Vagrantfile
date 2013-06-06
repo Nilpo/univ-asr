@@ -40,6 +40,7 @@ Vagrant.configure("2") do |config|
       chef.add_recipe "dns"
       chef.add_recipe "owncloud"
       chef.add_recipe "http"
+      chef.add_recipe "ftp"
       chef.add_recipe "ssh"
       chef.add_recipe "tools"
     end

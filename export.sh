@@ -82,6 +82,8 @@ vm_cp dmz dmz/ \
         "/etc/passwd" \
         "/home/{rui,nelia,paulo}/public_html" \
         "/etc/ssh/{sshd_config,banner.txt}" \
+        "/etc/vsftpd/vsftpd.{conf,pem}" \
+        "/etc/sysconfig/iptables-config" \
 
 vm_cp router "" \
         "/etc/sysconfig/network-scripts/ifcfg-eth*" \
