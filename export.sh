@@ -1,4 +1,9 @@
 #!/bin/bash
+#
+# This script exports all the relevant configuration files from
+# each of the 7 VMs into a folder, grouped by network and name
+# of the VM. This makes the final delivery so that the teacher
+# doesn't need to install and run Vagrant to evaluate the work.
 
 # Folder for the final delivery
 : ${DEPLOY=release}
